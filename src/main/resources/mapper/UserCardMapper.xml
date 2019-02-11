@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bingsum.mapper.UserCardMapper">
+
+    <select id="getUserCardInfoList" resultType="com.bingsum.util.ParaData" >
+        select c.id,c.name,c.card from user_card c left join user u on c.user_id = u.id where u.open_id=#{openId} and c.delete_time is null
+    </select>
+
+    <insert id="newUserCardInfo" parameterType="com.bingsum.util.ParaData" >
+        insert into user_card(name,card,user_id,create_time) values(#{name},#{card},(select id from user u where u.open_id=#{open_id}),NOW());
+    </insert>
+
+    <update id="setUserCardInfo" parameterType="com.bingsum.util.ParaData" >
+        update user_card set name=#{name},card=#{card},update_time=NOW() where id = #{id};
+    </update>
+
+    <update id="delUserCard" parameterType="com.bingsum.util.ParaData" >
+        update user_card set delete_time = NOW() where id = #{id};
+    </update>
+
+    <select id="getNameByOid" resultType="com.bingsum.util.ParaData" >
+       select * from user_card c where INSTR(CONCAT(',',(select passengers_id from user_order_info r where r.id=#{rid}),','),CONCAT(',',c.id,','));
+    </select>
+</mapper>

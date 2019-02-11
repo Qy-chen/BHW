@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bingsum.mapper.CarMapper">
+    
+    <select id="getCarInfoList" resultType="com.bingsum.util.ParaData" >
+        select c.*,d.name dname from car c left join driver d on c.driver_id=d.id where c.delete_time is null
+    </select>
+    
+    <select id="getCarInfo" resultType="com.bingsum.util.ParaData">
+        select * from car where delete_time is null and id=#{id}
+    </select>
+    
+    <insert id="newCarInfo" parameterType="com.bingsum.util.ParaData">
+        insert into car(plate_numbers,vin,seat_count,level,wheel_base,car_size,motorcycle_type,color,full_face_pic,current_mileage,registration_time,last_maintain_time,last_maintain_mileage,brand,driver_id,create_time) values (#{plate_numbers},#{vin},#{seat_count},#{level},#{wheel_base},#{car_size},#{motorcycle_type},#{color},#{full_face_pic},#{current_mileage},#{registration_time},#{last_maintain_time},#{last_maintain_mileage},#{brand},#{driver_id},now());
+    </insert>
+
+    <update id="setCarInfo" parameterType="com.bingsum.util.ParaData">
+        update car set plate_numbers = #{plate_numbers},vin = #{vin},seat_count = #{seat_count},level = #{level},wheel_base = #{wheel_base},car_size = #{car_size},motorcycle_type = #{motorcycle_type},color = #{color},full_face_pic = #{full_face_pic},current_mileage = #{current_mileage},registration_time = #{registration_time},last_maintain_time = #{last_maintain_time},last_maintain_mileage = #{last_maintain_mileage},brand = #{brand},driver_id = #{driver_id},update_time= NOW() where id = #{id};
+    </update>
+
+    <update id="delCar" parameterType="com.bingsum.util.ParaData">
+        update car set delete_time = NOW() where id = #{id};
+    </update>
+</mapper>
