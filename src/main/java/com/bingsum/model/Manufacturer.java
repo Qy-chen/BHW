@@ -76,8 +76,6 @@ public class Manufacturer extends BaseEntity {
 	private Long bankCode;
 	//专利号
 	private Integer patent;
-	//案例
-	private Integer caseId;
 	//返点
 	private String rebates;
 
@@ -305,13 +303,4 @@ public class Manufacturer extends BaseEntity {
 	public void setRebates(String rebates){
 	    this.rebates = rebates;
 	}
-
-	public Integer getCaseId() {
-		return caseId;
-	}
-
-	public void setCaseId(Integer caseId) {
-		this.caseId = caseId;
-	}
-	
 }

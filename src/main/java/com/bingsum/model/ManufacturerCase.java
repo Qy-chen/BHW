@@ -29,6 +29,18 @@ public class ManufacturerCase extends BaseEntity {
 	//富文本详情
 	private String details;
 
+	//状态 0未审核1审核通过2审核拒绝
+	private String status;
+	
+	private Date createTime;
+	
+	private Date deleteTime;
+	
+	private Integer createBy;
+	
+	private Date updateTime;
+	
+	private Date updateBy;
 
 	public Integer getManufacturerId(){
 	    return this.manufacturerId;
@@ -53,4 +65,54 @@ public class ManufacturerCase extends BaseEntity {
 	public void setDetails(String details){
 	    this.details = details;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getDeleteTime() {
+		return deleteTime;
+	}
+
+	public void setDeleteTime(Date deleteTime) {
+		this.deleteTime = deleteTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Date getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(Date updateBy) {
+		this.updateBy = updateBy;
+	}
+	
+	
 }
