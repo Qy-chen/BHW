@@ -88,6 +88,7 @@ public class ManufacturerService{
     @Transactional(readOnly = false)
     public Object newManufacturerInfo(ParaData pd) {
         Manufacturer manufacturer = pd.toAddBean(Manufacturer.class);
+        manufacturer.setCreateBy(pd.getLoginStaff().getId());
         this.manufacturerMapper.insert(manufacturer);
         return ApiUtil.returnOK(pd,manufacturer);
     }
@@ -95,7 +96,8 @@ public class ManufacturerService{
     @Api
     @Transactional(readOnly = false)
     public Object setManufacturerInfo(ParaData pd) {
-        Manufacturer manufacturer = pd.toBean(Manufacturer.class);
+        Manufacturer manufacturer = pd.toUpdateBean(Manufacturer.class);
+        manufacturer.setUpdateBy(pd.getLoginStaff().getId());
         this.manufacturerMapper.updateByPrimaryKeySelective(manufacturer);
         return ApiUtil.returnOK(pd,manufacturer);
     }
@@ -103,7 +105,7 @@ public class ManufacturerService{
     @Api
     @Transactional(readOnly = false)
     public Object delSysRole(ParaData pd) {
-        Manufacturer manufacturer = pd.toBean(Manufacturer.class);
+        Manufacturer manufacturer = pd.toDeleteBean(Manufacturer.class);
         manufacturerMapper.updateByPrimaryKeySelective(manufacturer);
         return ApiUtil.returnOK(pd,manufacturer);
     }
