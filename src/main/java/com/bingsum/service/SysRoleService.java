@@ -87,7 +87,8 @@ public class SysRoleService{
     @Api
     @Transactional(readOnly = false)
     public Object newSysRoleInfo(ParaData pd) {
-        SysRole role = pd.toBean(SysRole.class);
+        SysRole role = pd.toAddBean(SysRole.class);
+        role.setCreateBy(pd.getLoginStaff().getId());
         this.sysRoleMapper.insert(role);
         return ApiUtil.returnOK(pd,role);
     }
@@ -95,7 +96,8 @@ public class SysRoleService{
     @Api
     @Transactional(readOnly = false)
     public Object setSysRoleInfo(ParaData pd) {
-        SysRole role = pd.toBean(SysRole.class);
+        SysRole role = pd.toUpdateBean(SysRole.class);
+        role.setUpdateBy(pd.getLoginStaff().getId());
         this.sysRoleMapper.updateByPrimaryKeySelective(role);
         return ApiUtil.returnOK(pd,role);
     }

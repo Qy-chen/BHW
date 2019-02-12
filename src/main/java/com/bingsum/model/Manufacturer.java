@@ -78,6 +78,14 @@ public class Manufacturer extends BaseEntity {
 	private Integer patent;
 	//返点
 	private String rebates;
+	//删除时间
+	private Date deleteTime;
+	//最后修改时间
+	private Date updateTime;
+	//创建人
+	private Integer createBy;
+	//最后修改人
+	private Integer updateBy;
 
 
 	public String getName(){
@@ -302,5 +310,37 @@ public class Manufacturer extends BaseEntity {
 	
 	public void setRebates(String rebates){
 	    this.rebates = rebates;
+	}
+
+	public Date getDeleteTime() {
+		return deleteTime;
+	}
+
+	public void setDeleteTime(Date deleteTime) {
+		this.deleteTime = deleteTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Integer getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
 	}
 }
