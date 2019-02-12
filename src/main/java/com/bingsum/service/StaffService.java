@@ -144,7 +144,7 @@ public class StaffService{
     @Api
     @Transactional(readOnly = false)
     public Object newStaffInfo(ParaData pd) {
-        Staff staff = pd.toBean(Staff.class);
+        Staff staff = pd.toAddBean(Staff.class);
         Object uName = this.getStaffInfoByUname(pd);
         if (uName != null){
             return ApiUtil.returnDescFail(pd,"用户名已存在！");
@@ -158,7 +158,7 @@ public class StaffService{
     @Api
     @Transactional(readOnly = false)
     public Object setStaffInfo(ParaData pd) {
-        Staff staff = pd.toBean(Staff.class);
+        Staff staff = pd.toUpdateBean(Staff.class);
         Staff uName = this.getStaffInfoByUname(pd);
         if (staff.getId()!=uName.getId() && uName != null){
             return ApiUtil.returnDescFail(pd,"用户名已存在！");

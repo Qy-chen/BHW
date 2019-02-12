@@ -30,6 +30,10 @@ public class SysRole extends BaseEntity {
 	private Date deleteTime;
 	//更新时间
 	private Date updateTime;
+	//创建人ID
+	private Integer createBy;
+	//最后修改人
+	private Integer updateBy;
 
 
 	public String getRoleName(){
@@ -62,5 +66,21 @@ public class SysRole extends BaseEntity {
 	
 	public void setUpdateTime(Date updateTime){
 	    this.updateTime = updateTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Integer getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
 	}
 }
