@@ -312,7 +312,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 		return loadUpdateInfo(  obj,   userId.intValue(), type);
 	}
 	
-	public static Object loadCreateInfo(Object obj,  Class type) {
+	public static Object loadCreateInfo(Object obj,  Class type, Integer uId) {
 		try {
 			BeanInfo beanInfo = Introspector.getBeanInfo(type);// 获取类属性
 			// 给JavaBean对象的属性赋值
@@ -323,9 +323,9 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 				if(propertyName.toLowerCase().equals("createtime")) {
 					descriptor.getWriteMethod().invoke(obj, new Date());
 				}
-//				else if(propertyName.toLowerCase().equals("creator")) {
-//					descriptor.getWriteMethod().invoke(obj, uId);
-//				}
+				else if(propertyName.toLowerCase().equals("createby")) {
+					descriptor.getWriteMethod().invoke(obj,  uId);
+				}
 			}
 			return obj;
 		} catch (Exception e) {
@@ -334,7 +334,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 		return null;
 	}
 	
-	public static Object loadUpdateInfo(Object obj,  Class type) {
+	public static Object loadUpdateInfo(Object obj,  Class type, Integer uId) {
 		try {
 			BeanInfo beanInfo = Introspector.getBeanInfo(type);// 获取类属性
 			// 给JavaBean对象的属性赋值
@@ -345,9 +345,9 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 				if(propertyName.toLowerCase().equals("updatetime")) {
 					descriptor.getWriteMethod().invoke(obj, new Date());
 				} 
-//				else if(propertyName.toLowerCase().equals("modifier")) {
-//					descriptor.getWriteMethod().invoke(obj, uId);
-//				}
+				else if(propertyName.toLowerCase().equals("updateby")) {
+					descriptor.getWriteMethod().invoke(obj, uId);
+				}
 			}
 			return obj;
 		} catch (Exception e) {

@@ -196,13 +196,23 @@ public class ParaData extends HashMap implements Map {
 	
 	public <T> T toAddBean(Class<T> cls) {
 		T bean = BeanUtils.convertMap(cls, this);
-		BeanUtils.loadCreateInfo(bean, cls);
+		Staff staff = this.getLoginStaff();
+		Integer uId = null;
+		if(staff != null) {
+			uId = staff.getId();
+		}
+		BeanUtils.loadCreateInfo(bean, cls, uId);
 		return bean;
 	}
 	
 	public <T> T toUpdateBean(Class<T> cls) {
 		T bean = BeanUtils.convertMap(cls, this);
-		BeanUtils.loadUpdateInfo(bean, cls);
+		Staff staff = this.getLoginStaff();
+		Integer uId = null;
+		if(staff != null) {
+			uId = staff.getId();
+		}
+		BeanUtils.loadUpdateInfo(bean, cls, uId);
 		return bean;
 	}
 	
