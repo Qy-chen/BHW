@@ -14,6 +14,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.bingsum.model.Staff;
+
 
 @SuppressWarnings("rawtypes")
 public class ParaData extends HashMap implements Map {
@@ -157,53 +159,6 @@ public class ParaData extends HashMap implements Map {
 		}
 		return null;
 	}
-//
-//	public <T> T toObject(Class<T> cls){
-//	    String name;
-//		try{
-//			BeanInfo beanInfo = Introspector.getBeanInfo(cls); // 获取类属性    
-//	        T obj = cls.newInstance(); // 创建 JavaBean 对象    
-//	    
-//	        // 给 JavaBean 对象的属性赋值    
-//	        PropertyDescriptor[] propertyDescriptors =  beanInfo.getPropertyDescriptors();    
-//	        for (int i = 0; i< propertyDescriptors.length; i++) {    
-//	            PropertyDescriptor descriptor = propertyDescriptors[i];    
-//	            String propertyName = descriptor.getName(); 
-//	            name = descriptor.getPropertyType().getName().toLowerCase();
-//	            
-//	            if (map.containsKey(propertyName)) {    
-//	                // 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。    
-//	                Object value = map.get(propertyName); 
-//	                
-//	                if(name.contains("string")){
-//		            	value = StrUtil.toString(value);
-//		            } else if(name.contains("integer")){
-//		            	value = StrUtil.toInteger(value);
-//		            } else if(name.contains("byte")){
-//		            	value = StrUtil.toByte(value);
-//		            } else if(name.contains("double")){
-//		            	value = StrUtil.toDouble(value);
-//		            } else if(name.contains("short")){
-//                        value = StrUtil.toInteger(value).shortValue();
-//                    } else if(name.contains("byte")){
-//                        value = StrUtil.toInteger(value).byteValue();
-//                    } else if(name.contains("date")){
-//                        value = StrUtil.toDate(value);
-//                    } else if(name.contains("bigdecimal")){
-//                    	value = StrUtil.toBigDecimal(value);
-//                    }
-//	                Object[] args = new Object[1];    
-//	                args[0] = value;    
-//	    
-//	                descriptor.getWriteMethod().invoke(obj, args);    
-//	            }    
-//	        }    
-//	        return obj;  
-//		} catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
 	
 	public static ParaData getInstance(){
 	    ParaData pd = new ParaData();
@@ -311,5 +266,14 @@ public class ParaData extends HashMap implements Map {
 			}
 		}
 		this.putAll(add);
+	}
+	
+	public Staff getLoginStaff() {
+		Staff s = (Staff) this.get("loginStaff");
+		return s;
+	}
+	
+	public String getToken() {
+		return this.getString("token");
 	}
 }

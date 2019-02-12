@@ -1,6 +1,10 @@
 package com.bingsum.controller;
 
 import com.bingsum.annotation.Api;
+import com.bingsum.cache.StaffCache;
+import com.bingsum.mapper.StaffMapper;
+import com.bingsum.model.Staff;
+import com.bingsum.service.StaffService;
 import com.bingsum.util.ApiUtil;
 import com.bingsum.util.BusiData;
 import com.bingsum.util.HttpUtil;
@@ -28,6 +32,9 @@ public class ApiController {
 	@Autowired
 	private ApplicationContext applicationContext;
 	
+	@Autowired
+	private StaffMapper staffMapper;
+	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/api/{service}/{methodName}", method = RequestMethod.POST)
 	public Object api(Page pg,  HttpServletRequest request,@PathVariable("service") String service,@PathVariable("methodName") String methodName) {
@@ -54,6 +61,19 @@ public class ApiController {
 						return ApiUtil.returnDescFail(new ParaData(), s+"不能为空");
 					}
 				}
+			}
+			String noAuth = api.noAuth();
+			if(StringUtils.isBlank(noAuth)) {
+				//获取登录信息
+				String token = pd.getString("token");
+				if(StringUtils.isBlank(token)) {
+					return ApiUtil.returnDescFail(new ParaData(), "token不能为空");
+				}
+				Staff staff = StaffCache.getByToken(token, staffMapper);
+				if(staff == null) {
+					return ApiUtil.returnDescFail(new ParaData(), "无效的token");
+				}
+				pd.put("loginStaff", staff);
 			}
             pd.put("ip", ip);
             result = method.invoke(serObj, pd);

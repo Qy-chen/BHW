@@ -7,6 +7,11 @@
 package com.bingsum.model;
 
 import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.bingsum.util.MD5Util;
+
 import java.math.BigDecimal;
 
 
@@ -66,7 +71,8 @@ public class Staff extends BaseEntity {
 	private String emergencyContactRelation;
 	//
 	private String emergencyContactCellphone;
-
+	//登录token
+	private String token;
 
 	public String getUsername(){
 	    return this.username;
@@ -243,4 +249,23 @@ public class Staff extends BaseEntity {
 	public void setEmergencyContactCellphone(String emergencyContactCellphone){
 	    this.emergencyContactCellphone = emergencyContactCellphone;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	/**
+	 * 加密密码明文
+	 */
+	public void enPwd() {
+		if(StringUtils.isNotBlank(this.getPassword())) {
+			String enPwd = MD5Util.MD5Encode(this.getPassword(), "UTF-8");
+			this.setPassword(enPwd);
+		}
+	}
+	
 }

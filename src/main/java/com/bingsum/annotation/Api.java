@@ -13,5 +13,8 @@ import java.lang.annotation.Inherited;
 @Inherited 
 public @interface Api {
 	int api() default 1;
+	
 	String notNullPara() default "";
+
+	String noAuth() default "";
 }
