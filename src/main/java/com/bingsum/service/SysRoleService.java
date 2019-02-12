@@ -6,6 +6,10 @@
  */
 package com.bingsum.service;
 
+import com.bingsum.annotation.Api;
+import com.bingsum.util.ApiUtil;
+import com.bingsum.util.ParaData;
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import java.util.List;
 
 import com.bingsum.model.SysRole;
 import com.bingsum.mapper.SysRoleMapper;
+import tk.mybatis.mapper.entity.Example;
 
 /**   
  *  
@@ -55,4 +60,52 @@ public class SysRoleService{
             sysRoleMapper.insert(sysRole);
         }
     }
+
+    @Api
+    public Object getSysRoleInfoList(ParaData pd){
+        Page<?> page = PageHelper.startPage(pd.getInteger("currentPage"), 20);
+        Example example = new Example(SysRole.class);
+        Example.Criteria criteria = example.createCriteria();
+        example.orderBy("createTime").desc();
+        sysRoleMapper.selectByExample(example);
+        return ApiUtil.returnObject(pd, page);
+    }
+
+    @Api
+    public Object getSysRoleInfo(ParaData pd) {
+        Example example = new Example(SysRole.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("id", pd.getString("id"));
+        SysRole role = sysRoleMapper.selectOneByExample(example);
+
+        if (role == null){
+            return ApiUtil.returnDescFail(pd,"没有该数据！");
+        }
+        return ApiUtil.returnOK(pd,role);
+    }
+
+    @Api
+    @Transactional(readOnly = false)
+    public Object newSysRoleInfo(ParaData pd) {
+        SysRole role = pd.toBean(SysRole.class);
+        this.sysRoleMapper.insert(role);
+        return ApiUtil.returnOK(pd,role);
+    }
+
+    @Api
+    @Transactional(readOnly = false)
+    public Object setSysRoleInfo(ParaData pd) {
+        SysRole role = pd.toBean(SysRole.class);
+        this.sysRoleMapper.updateByPrimaryKeySelective(role);
+        return ApiUtil.returnOK(pd,role);
+    }
+
+    @Api
+    @Transactional(readOnly = false)
+    public Object delSysRole(ParaData pd) {
+        SysRole role = pd.toDeleteBean(SysRole.class);
+        sysRoleMapper.updateByPrimaryKeySelective(role);
+        return ApiUtil.returnOK(pd,role);
+    }
+
 }
