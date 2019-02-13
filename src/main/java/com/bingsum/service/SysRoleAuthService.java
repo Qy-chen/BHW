@@ -21,6 +21,7 @@ import com.bingsum.util.ApiUtil;
 import com.bingsum.util.ParaData;
 import com.bingsum.util.StrUtil;
 import com.bingsum.annotation.Api;
+import com.bingsum.cache.AuthCache;
 import com.bingsum.mapper.SysRoleAuthMapper;
 
 /**   
@@ -79,6 +80,7 @@ public class SysRoleAuthService{
         	}
         	this.sysRoleAuthMapper.insertList(recordList);
     	}
+    	AuthCache.evictRoleAuthCache(record.getRoleId());
     	return ApiUtil.returnOK();
     }
 }

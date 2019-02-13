@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+
 import com.github.pagehelper.PageHelper;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import com.bingsum.util.ApiUtil;
 import com.bingsum.util.ParaData;
 import com.bingsum.util.StrUtil;
 import com.bingsum.annotation.Api;
+import com.bingsum.cache.AuthCache;
 import com.bingsum.mapper.SysStaffRoleMapper;
 
 /**   
@@ -78,6 +82,7 @@ public class SysStaffRoleService{
         	}
         	this.sysStaffRoleMapper.insertList(recordList);
     	}
+    	AuthCache.evictStaffRoleCache(record.getStaffId());
     	return ApiUtil.returnOK();
     }
 }

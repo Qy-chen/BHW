@@ -5,11 +5,13 @@ import com.bingsum.cache.StaffCache;
 import com.bingsum.mapper.StaffMapper;
 import com.bingsum.model.Staff;
 import com.bingsum.service.StaffService;
+import com.bingsum.service.SysAuthService;
 import com.bingsum.util.ApiUtil;
 import com.bingsum.util.BusiData;
 import com.bingsum.util.HttpUtil;
 import com.bingsum.util.Page;
 import com.bingsum.util.ParaData;
+import com.bingsum.util.StrUtil;
 import com.github.pagehelper.PageInfo;
 
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +36,9 @@ public class ApiController {
 	
 	@Autowired
 	private StaffMapper staffMapper;
+	
+	@Autowired
+	private SysAuthService sysAuthService;
 	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/api/{service}/{methodName}", method = RequestMethod.POST)
@@ -74,6 +79,12 @@ public class ApiController {
 					return ApiUtil.returnDescFail(new ParaData(), "无效的token");
 				}
 				pd.put("loginStaff", staff);
+				//验证用户的接口权限
+				if(!"admin".equalsIgnoreCase(staff.getUsername())) {
+					if(!sysAuthService.isAuth(staff, StrUtil.concat(service, "/", methodName))) {
+						return ApiUtil.returnDescFail(new ParaData(), "接口权限不足");
+					}
+				}
 			}
             pd.put("ip", ip);
             result = method.invoke(serObj, pd);

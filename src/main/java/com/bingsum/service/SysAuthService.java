@@ -9,6 +9,7 @@ package com.bingsum.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -17,12 +18,16 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
+import com.bingsum.model.Staff;
 import com.bingsum.model.SysAuth;
 import com.bingsum.model.SysRole;
 import com.bingsum.util.ApiUtil;
 import com.bingsum.util.ParaData;
 import com.bingsum.annotation.Api;
+import com.bingsum.cache.AuthCache;
 import com.bingsum.mapper.SysAuthMapper;
+import com.bingsum.mapper.SysRoleAuthMapper;
+import com.bingsum.mapper.SysStaffRoleMapper;
 
 /**   
  *  
@@ -38,6 +43,12 @@ public class SysAuthService{
 
     @Autowired
     private SysAuthMapper sysAuthMapper;
+    
+    @Autowired
+    private SysRoleAuthMapper sysRoleAuthMapper;
+    
+    @Autowired
+    private SysStaffRoleMapper sysStaffRoleMapper;
 	
     public List<SysAuth> getAll(SysAuth sysAuth) {
         if (sysAuth.getPage() != null && sysAuth.getRows() != null) {
@@ -98,6 +109,7 @@ public class SysAuthService{
      */
     @Api
     @Transactional(readOnly = false)
+    @CacheEvict(value="roleAuth",  allEntries=true)
     public Object addSysAuth(ParaData pd) {
     	SysAuth record = pd.toAddBean(SysAuth.class);
     	this.sysAuthMapper.insert(record);
@@ -111,6 +123,7 @@ public class SysAuthService{
      */
     @Api(notNullPara="id")
     @Transactional(readOnly = false)
+    @CacheEvict(value="roleAuth",  allEntries=true)
     public Object updateSysAuth(ParaData pd) {
     	SysAuth record = pd.toUpdateBean(SysAuth.class);
     	this.sysAuthMapper.updateByPrimaryKeySelective(record);
@@ -124,10 +137,32 @@ public class SysAuthService{
      */
     @Api(notNullPara="id")
     @Transactional(readOnly = false)
+    @CacheEvict(value="roleAuth",  allEntries=true)
     public Object delSysAuth(ParaData pd) {
     	SysAuth record = pd.toDeleteBean(SysAuth.class);
     	this.sysAuthMapper.updateByPrimaryKeySelective(record);
         return ApiUtil.returnOK(pd, record);
     }
 
+    /**
+     * 判断是否授权
+     * @param staff
+     * @param api
+     * @return
+     */
+    public boolean isAuth(Staff staff, String link) {
+    	//从缓存获取用户角色
+    	List<ParaData> roleList = AuthCache.getStaffRoleList(staff.getId(), sysStaffRoleMapper);
+    	for(ParaData role : roleList) {
+    		Integer roleId = role.getInteger("id");
+    		List<ParaData> authList = AuthCache.getRoleAuthApi(roleId, sysRoleAuthMapper);
+    		for(ParaData auth : authList) {
+    			String api = auth.getString("api") + ",";
+    			if(api.contains(link)) {
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    }
 }
