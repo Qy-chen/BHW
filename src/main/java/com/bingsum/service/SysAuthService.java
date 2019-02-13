@@ -66,7 +66,7 @@ public class SysAuthService{
     
 
     /**
-     * 分页查询
+     * 分页查询权限设置
      * @param pd
      * @return
      */
@@ -77,7 +77,12 @@ public class SysAuthService{
         return ApiUtil.returnObject(pd, page);
     }
 
-    @Api
+    /**
+     * 根据id查询
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     public Object getSysAuth(ParaData pd) {
     	SysAuth res = this.sysAuthMapper.selectByPrimaryKey(pd.getInteger("id"));
         if (res == null){
@@ -86,6 +91,11 @@ public class SysAuthService{
         return ApiUtil.returnOK(pd,res);
     }
 
+    /**
+     * 新增权限
+     * @param pd
+     * @return
+     */
     @Api
     @Transactional(readOnly = false)
     public Object addSysAuth(ParaData pd) {
@@ -94,7 +104,12 @@ public class SysAuthService{
         return ApiUtil.returnOK(pd, record);
     }
 
-    @Api
+    /**
+     * 根据id修改权限设置
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
     public Object updateSysAuth(ParaData pd) {
     	SysAuth record = pd.toUpdateBean(SysAuth.class);
@@ -102,9 +117,14 @@ public class SysAuthService{
         return ApiUtil.returnOK(pd, record);
     }
 
-    @Api
+    /**
+     * 删除权限设置
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
-    public Object delSysRole(ParaData pd) {
+    public Object delSysAuth(ParaData pd) {
     	SysAuth record = pd.toDeleteBean(SysAuth.class);
     	this.sysAuthMapper.updateByPrimaryKeySelective(record);
         return ApiUtil.returnOK(pd, record);
