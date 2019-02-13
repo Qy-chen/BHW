@@ -7,6 +7,10 @@
 package com.bingsum.mapper;
 
 import com.bingsum.util.MyMapper;
+import com.bingsum.util.ParaData;
+
+import java.util.List;
+
 import com.bingsum.model.SysStaffRole;
 
 /**   
@@ -18,4 +22,11 @@ import com.bingsum.model.SysStaffRole;
  *    
  */
 public interface SysStaffRoleMapper extends MyMapper<SysStaffRole> {
+	
+	/**
+	 * 查询后台人员角色列表
+	 * @param staffId
+	 * @return
+	 */
+	public List<ParaData> selectRoleListByStaff(Integer staffId);
 }

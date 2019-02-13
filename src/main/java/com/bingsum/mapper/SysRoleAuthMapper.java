@@ -7,6 +7,10 @@
 package com.bingsum.mapper;
 
 import com.bingsum.util.MyMapper;
+import com.bingsum.util.ParaData;
+
+import java.util.List;
+
 import com.bingsum.model.SysRoleAuth;
 
 /**   
@@ -18,4 +22,6 @@ import com.bingsum.model.SysRoleAuth;
  *    
  */
 public interface SysRoleAuthMapper extends MyMapper<SysRoleAuth> {
+	
+	public List<ParaData> selectAuthByRole(Integer roleId);
 }
