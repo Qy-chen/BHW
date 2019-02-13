@@ -61,6 +61,11 @@ public class ManufacturerService{
         }
     }
 
+    /**
+     *
+     * @param pd
+     * @return
+     */
     @Api
     public Object getManufacturerInfoList(ParaData pd){
         Page<?> page = PageHelper.startPage(pd.getInteger("currentPage"), 20);
@@ -71,7 +76,12 @@ public class ManufacturerService{
         return ApiUtil.returnObject(pd, page);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     public Object getManufacturerInfo(ParaData pd) {
         Example example = new Example(Manufacturer.class);
         Example.Criteria criteria = example.createCriteria();
@@ -84,6 +94,11 @@ public class ManufacturerService{
         return ApiUtil.returnOK(pd,manufacturer);
     }
 
+    /**
+     *
+     * @param pd
+     * @return
+     */
     @Api
     @Transactional(readOnly = false)
     public Object newManufacturerInfo(ParaData pd) {
@@ -93,7 +108,12 @@ public class ManufacturerService{
         return ApiUtil.returnOK(pd,manufacturer);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
     public Object setManufacturerInfo(ParaData pd) {
         Manufacturer manufacturer = pd.toUpdateBean(Manufacturer.class);
@@ -102,7 +122,12 @@ public class ManufacturerService{
         return ApiUtil.returnOK(pd,manufacturer);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
     public Object delSysRole(ParaData pd) {
         Manufacturer manufacturer = pd.toDeleteBean(Manufacturer.class);

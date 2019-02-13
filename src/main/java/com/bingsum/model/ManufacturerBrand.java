@@ -26,6 +26,16 @@ public class ManufacturerBrand extends BaseEntity {
 	private Integer manufacturerId;
 	//品牌名
 	private String name;
+	//创建时间
+	private Date createTime;
+	//删除时间
+	private Date deleteTime;
+	//更新时间
+	private Date updateTime;
+	//创建人ID
+	private Integer createBy;
+	//最后修改人
+	private Integer updateBy;
 
 
 	public Integer getManufacturerId(){
@@ -42,5 +52,45 @@ public class ManufacturerBrand extends BaseEntity {
 	
 	public void setName(String name){
 	    this.name = name;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getDeleteTime() {
+		return deleteTime;
+	}
+
+	public void setDeleteTime(Date deleteTime) {
+		this.deleteTime = deleteTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Integer getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
 	}
 }

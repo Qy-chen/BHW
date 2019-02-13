@@ -61,6 +61,11 @@ public class SysRoleService{
         }
     }
 
+    /**
+     *
+     * @param pd
+     * @return
+     */
     @Api
     public Object getSysRoleInfoList(ParaData pd){
         Page<?> page = PageHelper.startPage(pd.getInteger("currentPage"), 20);
@@ -71,7 +76,12 @@ public class SysRoleService{
         return ApiUtil.returnObject(pd, page);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     public Object getSysRoleInfo(ParaData pd) {
         Example example = new Example(SysRole.class);
         Example.Criteria criteria = example.createCriteria();
@@ -84,6 +94,11 @@ public class SysRoleService{
         return ApiUtil.returnOK(pd,role);
     }
 
+    /**
+     *
+     * @param pd
+     * @return
+     */
     @Api
     @Transactional(readOnly = false)
     public Object newSysRoleInfo(ParaData pd) {
@@ -93,7 +108,12 @@ public class SysRoleService{
         return ApiUtil.returnOK(pd,role);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
     public Object setSysRoleInfo(ParaData pd) {
         SysRole role = pd.toUpdateBean(SysRole.class);
@@ -102,7 +122,12 @@ public class SysRoleService{
         return ApiUtil.returnOK(pd,role);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
     public Object delSysRole(ParaData pd) {
         SysRole role = pd.toDeleteBean(SysRole.class);

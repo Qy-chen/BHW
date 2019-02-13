@@ -96,8 +96,12 @@ public class StaffService{
     	
     	return ApiUtil.returnOK(pd, token);
     }
-    
-    
+
+    /**
+     * 登出
+     * @param pd
+     * @return
+     */
     @Api
     @Transactional(readOnly = false)
     public Object logout(ParaData pd) {
@@ -107,9 +111,13 @@ public class StaffService{
     	this.staffMapper.updateByPrimaryKeySelective(staff);
     	return ApiUtil.returnOK();
     }
-    
 
 
+    /**
+     *
+     * @param pd
+     * @return
+     */
     @Api
     public Object getStaffInfoList(ParaData pd){
         Example example = new Example(Staff.class);
@@ -120,7 +128,12 @@ public class StaffService{
         return ApiUtil.returnObject(pd, page);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     public Object getStaffInfo(ParaData pd) {
         Example example = new Example(Staff.class);
         Example.Criteria criteria = example.createCriteria();
@@ -133,6 +146,11 @@ public class StaffService{
         return ApiUtil.returnOK(pd,staff);
     }
 
+    /**
+     *
+     * @param pd
+     * @return
+     */
     public Staff getStaffInfoByUname(ParaData pd) {
         Example example = new Example(Staff.class);
         Example.Criteria criteria = example.createCriteria();
@@ -141,6 +159,11 @@ public class StaffService{
         return staff;
     }
 
+    /**
+     *
+     * @param pd
+     * @return
+     */
     @Api
     @Transactional(readOnly = false)
     public Object newStaffInfo(ParaData pd) {
@@ -155,7 +178,12 @@ public class StaffService{
         return ApiUtil.returnOK(pd,staff);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
     public Object setStaffInfo(ParaData pd) {
         Staff staff = pd.toUpdateBean(Staff.class);
@@ -168,7 +196,12 @@ public class StaffService{
         return ApiUtil.returnOK(pd,staff);
     }
 
-    @Api
+    /**
+     *
+     * @param pd
+     * @return
+     */
+    @Api(notNullPara="id")
     @Transactional(readOnly = false)
     public Object delStaff(ParaData pd) {
         Staff staff = pd.toDeleteBean(Staff.class);

@@ -73,6 +73,8 @@ public class Staff extends BaseEntity {
 	private String emergencyContactCellphone;
 	//登录token
 	private String token;
+	//所属厂商
+	private Integer manufacturer_id;
 
 	public String getUsername(){
 	    return this.username;
@@ -267,5 +269,12 @@ public class Staff extends BaseEntity {
 			this.setPassword(enPwd);
 		}
 	}
-	
+
+	public Integer getManufacturer_id() {
+		return manufacturer_id;
+	}
+
+	public void setManufacturer_id(Integer manufacturer_id) {
+		this.manufacturer_id = manufacturer_id;
+	}
 }
