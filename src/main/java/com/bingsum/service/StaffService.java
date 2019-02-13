@@ -8,6 +8,7 @@ package com.bingsum.service;
 
 import com.bingsum.annotation.Api;
 import com.bingsum.util.ApiUtil;
+import com.bingsum.util.MD5Util;
 import com.bingsum.util.ParaData;
 import com.github.pagehelper.Page;
 import org.springframework.stereotype.Service;
@@ -166,6 +167,37 @@ public class StaffService{
             this.staffMapper.updateByPrimaryKeySelective(staff);
         }
         return ApiUtil.returnOK(pd,staff);
+    }
+
+    @Api
+    @Transactional(readOnly = false)
+    public Object setStaffPwdAll(ParaData pd) {
+        Staff staff = pd.toUpdateBean(Staff.class);
+        staff.enPwd();
+        this.staffMapper.updateByPrimaryKeySelective(staff);
+        return ApiUtil.returnOK();
+    }
+
+    @Api
+    @Transactional(readOnly = false)
+    public Object setStaffPwd(ParaData pd) {
+        Staff staff = pd.getLoginStaff();
+        String oldpwd =MD5Util.MD5Encode(pd.getString("oldpwd"), "UTF-8");
+        String newpwd =MD5Util.MD5Encode(pd.getString("password"), "UTF-8");
+
+        if (staff.getPassword().equals(oldpwd)){
+            //旧密码相同
+            System.out.println(pd.getLoginStaff().getPassword());
+            System.out.println("oldpwd"+oldpwd);
+            staff.setPassword(newpwd);
+            this.staffMapper.updateByPrimaryKeySelective(staff);
+            System.out.println("newpwd"+staff.getPassword());
+
+        }else{
+            System.out.println(pd.getLoginStaff().getPassword()+"旧密码不相同"+oldpwd);
+            return ApiUtil.returnDescFail(pd,"旧密码不相同！");
+        }
+        return ApiUtil.returnOK();
     }
 
     @Api
