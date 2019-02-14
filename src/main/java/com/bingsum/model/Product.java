@@ -103,6 +103,14 @@ public class Product extends BaseEntity {
 	//
 	private Integer soldCount;
 
+	private Date deleteTime;
+
+	private Date updateTime;
+	//创建人ID
+	private Integer createBy;
+	//最后修改人
+	private Integer updateBy;
+
 
 	public String getProductNo(){
 	    return this.productNo;
@@ -398,5 +406,37 @@ public class Product extends BaseEntity {
 	
 	public void setSoldCount(Integer soldCount){
 	    this.soldCount = soldCount;
+	}
+
+	public Date getDeleteTime() {
+		return deleteTime;
+	}
+
+	public void setDeleteTime(Date deleteTime) {
+		this.deleteTime = deleteTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Integer getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
 	}
 }
