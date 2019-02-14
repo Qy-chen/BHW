@@ -118,6 +118,10 @@ public class ManufacturerCaseService{
         ManufacturerCase manufacturerCase = pd.toAddBean(ManufacturerCase.class);
         manufacturerCase.setStatus("0");
         manufacturerCase.setCreateBy(pd.getLoginStaff().getId());
+        Staff staff = pd.getLoginStaff();
+        if (staff.getManufacturer_id() != null){
+            manufacturerCase.setManufacturerId(staff.getManufacturer_id());
+        }
         this.manufacturerCaseMapper.insert(manufacturerCase);
         return ApiUtil.returnOK(pd,manufacturerCase);
     }

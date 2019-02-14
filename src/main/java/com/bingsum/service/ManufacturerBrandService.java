@@ -113,6 +113,10 @@ public class ManufacturerBrandService{
     public Object newManufacturerBrandInfo(ParaData pd) {
         ManufacturerBrand manufacturerBrand = pd.toAddBean(ManufacturerBrand.class);
         manufacturerBrand.setCreateBy(pd.getLoginStaff().getId());
+        Staff staff = pd.getLoginStaff();
+        if (staff.getManufacturer_id() != null){
+            manufacturerBrand.setManufacturerId(staff.getManufacturer_id());
+        }
         this.manufacturerBrandMapper.insert(manufacturerBrand);
         return ApiUtil.returnOK(pd,manufacturerBrand);
     }
