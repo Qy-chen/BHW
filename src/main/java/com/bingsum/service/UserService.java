@@ -6,6 +6,13 @@
  */
 package com.bingsum.service;
 
+import com.bingsum.annotation.Api;
+import com.bingsum.model.Staff;
+import com.bingsum.util.ApiUtil;
+import com.bingsum.util.MD5Util;
+import com.bingsum.util.ParaData;
+import com.bingsum.util.ShareCodeUtil;
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +22,7 @@ import java.util.List;
 
 import com.bingsum.model.User;
 import com.bingsum.mapper.UserMapper;
+import tk.mybatis.mapper.entity.Example;
 
 /**   
  *  
@@ -55,4 +63,70 @@ public class UserService{
             userMapper.insert(user);
         }
     }
+
+    @Api
+    public Object getUserInfoList(ParaData pd){
+        Example example = new Example(User.class);
+        example.orderBy("createTime").desc();
+        Page<?> page = PageHelper.startPage(pd.getInteger("currentPage"), 20);
+        userMapper.selectByExample(example);
+        return ApiUtil.returnObject(pd, page);
+    }
+
+    @Api(notNullPara="id")
+    public Object getUserInfo(ParaData pd) {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("id", pd.getString("id"));
+        User user = userMapper.selectOneByExample(example);
+
+        if (user == null){
+            return ApiUtil.returnDescFail(pd,"没有该数据！");
+        }
+        return ApiUtil.returnOK(pd,user);
+    }
+
+    @Api
+    @Transactional(readOnly = false)
+    public Object newUserInfo(ParaData pd) {
+        User user = pd.toAddBean(User.class);
+        user.setPassword(MD5Util.MD5Encode(pd.getString("password"), "UTF-8"));
+        Staff staff = pd.getLoginStaff();
+        if (staff.getManufacturer_id() != null){
+            return ApiUtil.returnDescFail(pd,"没有权限！");
+        }
+        this.userMapper.insert(user);
+        return ApiUtil.returnOK(pd,user);
+    }
+
+    @Api(notNullPara="id")
+    @Transactional(readOnly = false)
+    public Object setUserInfo(ParaData pd) {
+        User user = pd.toUpdateBean(User.class);
+        user.setPassword(MD5Util.MD5Encode(pd.getString("password"), "UTF-8"));
+        Staff staff = pd.getLoginStaff();
+        if (staff.getManufacturer_id() != null){
+            return ApiUtil.returnDescFail(pd,"没有权限！");
+        }
+        this.userMapper.updateByPrimaryKeySelective(user);
+        return ApiUtil.returnOK(pd,user);
+    }
+
+    @Api(notNullPara="id")
+    @Transactional(readOnly = false)
+    public Object delUser(ParaData pd) {
+        User user = pd.toDeleteBean(User.class);
+        userMapper.updateByPrimaryKeySelective(user);
+        return ApiUtil.returnOK(pd,user);
+    }
+
+    @Api(notNullPara="id")
+    @Transactional(readOnly = false)
+    public Object userShare(ParaData pd) {
+        User user = pd.toUpdateBean(User.class);
+        user.setInvitation(ShareCodeUtil.toSerialCode(pd.getInteger("id")));
+        userMapper.updateByPrimaryKeySelective(user);
+        return ApiUtil.returnOK(pd,user);
+    }
+
 }

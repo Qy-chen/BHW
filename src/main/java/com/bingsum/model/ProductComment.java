@@ -32,9 +32,9 @@ public class ProductComment extends BaseEntity {
 	private Integer manufacturerId;
 	//订单id
 	private Integer orderId;
-	//订单id
+	//产品id
 	private Integer productId;
-	//订单名称
+	//产品名称
 	private String productName;
 	//skuid
 	private Integer skuId;
@@ -46,6 +46,12 @@ public class ProductComment extends BaseEntity {
 	private Date updateTime;
 	//删除时间
 	private Date deleteTime;
+	//回复id
+	private Integer recoveryId;
+	//创建人ID
+	private Integer createBy;
+	//最后修改人
+	private Integer updateBy;
 
 
 	public String getMessage(){
@@ -142,5 +148,29 @@ public class ProductComment extends BaseEntity {
 	
 	public void setDeleteTime(Date deleteTime){
 	    this.deleteTime = deleteTime;
+	}
+
+	public Integer getRecoveryId() {
+		return recoveryId;
+	}
+
+	public void setRecoveryId(Integer recoveryId) {
+		this.recoveryId = recoveryId;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Integer getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
 	}
 }

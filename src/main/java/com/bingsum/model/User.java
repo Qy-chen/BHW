@@ -50,6 +50,10 @@ public class User extends BaseEntity {
 	private String idNumber;
 	//积分
 	private Integer integral;
+	//个人邀请码
+	private String Invitation;
+	//邀请人id
+	private Integer Beinvited;
 
 
 	public String getUsername(){
@@ -162,5 +166,21 @@ public class User extends BaseEntity {
 	
 	public void setIntegral(Integer integral){
 	    this.integral = integral;
+	}
+
+	public String getInvitation() {
+		return Invitation;
+	}
+
+	public void setInvitation(String invitation) {
+		Invitation = invitation;
+	}
+
+	public Integer getBeinvited() {
+		return Beinvited;
+	}
+
+	public void setBeinvited(Integer beinvited) {
+		Beinvited = beinvited;
 	}
 }

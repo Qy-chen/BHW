@@ -28,8 +28,6 @@ public class ManufacturerQualification extends BaseEntity {
 	private String name;
 	//富文本描述
 	private String details;
-	//删除时间
-	private Date deleteTime;
 
 
 	public Integer getManufacturerId(){
@@ -54,13 +52,5 @@ public class ManufacturerQualification extends BaseEntity {
 	
 	public void setDetails(String details){
 	    this.details = details;
-	}
-
-	public Date getDeleteTime() {
-		return deleteTime;
-	}
-
-	public void setDeleteTime(Date deleteTime) {
-		this.deleteTime = deleteTime;
 	}
 }

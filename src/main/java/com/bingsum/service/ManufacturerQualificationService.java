@@ -133,17 +133,5 @@ public class ManufacturerQualificationService{
         return ApiUtil.returnOK(pd,manufacturerQualification);
     }
 
-    /**
-     *
-     * @param pd
-     * @return
-     */
-    @Api(notNullPara="id")
-    @Transactional(readOnly = false)
-    public Object delManufacturerQualification(ParaData pd) {
-        ManufacturerQualification manufacturerQualification = pd.toDeleteBean(ManufacturerQualification.class);
-        manufacturerQualificationMapper.updateByPrimaryKeySelective(manufacturerQualification);
-        return ApiUtil.returnOK(pd,manufacturerQualification);
-    }
 
 }
